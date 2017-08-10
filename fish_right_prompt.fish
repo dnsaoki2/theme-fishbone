@@ -7,21 +7,22 @@ function fish_right_prompt -d "Right side prompt message"
 
     set_color $dark_grey
 
-    show_virtualenv_name
+    show_pyenv_name
     show_git_info
     echo -en (date +%H:%M:%S)
 
     set_color normal
 end
 
-
-function show_virtualenv_name -d "Display the name of the current virtualenv"
-
-    if set -q VIRTUAL_ENV
-        echo -en "["(basename "$VIRTUAL_ENV")"] "
+function show_pyenv_name -d "pyenv virtualenv"
+    set --local GLOBAL_NAME (pyenv global)
+    set --local VERSION_NAME (pyenv version-name)
+    if [ ! -z $VERSION_NAME ]
+        if [ $GLOBAL_NAME != $VERSION_NAME ]
+            echo -n "["$VERSION_NAME"] "
+        end
     end
 end
-
 
 function show_git_info -d "Show git repository information"
 
