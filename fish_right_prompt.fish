@@ -8,6 +8,8 @@ function fish_right_prompt -d "Right side prompt message"
     set_color $dark_grey
 
     show_pyenv_name
+    show_node_version
+    
     show_git_info
     echo -en (date +%H:%M:%S)
 
@@ -20,6 +22,16 @@ function show_pyenv_name -d "pyenv virtualenv"
     if [ ! -z $VERSION_NAME ]
         if [ $GLOBAL_NAME != $VERSION_NAME ]
             echo -n "["$VERSION_NAME"] "
+        end
+    end
+end
+
+function show_node_version -d "Show node version"
+    set --local GLOBAL_NAME (nodenv global)
+    set --local VERSION_NAME (nodenv version-name)
+    if [ ! -z $VERSION_NAME ]
+        if [ $GLOBAL_NAME != $VERSION_NAME ]
+            echo -n "[Node: "$VERSION_NAME"] "
         end
     end
 end
